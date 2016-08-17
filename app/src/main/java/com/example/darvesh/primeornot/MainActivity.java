@@ -14,7 +14,7 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button prime, skip, notPrime;
-    TextView randText;
+    TextView randText, yourScore, totalScore;
     int min = 1, max=1000;
     RelativeLayout rL;
     Random random = new Random();
@@ -33,7 +33,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         prime.setOnClickListener(this);
         skip.setOnClickListener(this);
         notPrime.setOnClickListener(this);
-
+        globalRandom = random.nextInt(max - min) + min;
+        randText.setText("" + globalRandom);
+        yourScore = (TextView) findViewById(R.id.yourScore);
+        totalScore = (TextView) findViewById(R.id.outOfScore);
     }
 
     public static boolean CheckPrime (int pNum){
@@ -57,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         switch(view.getId()) {
             case R.id.button3: {
                 globalRandom = random.nextInt(max - min) + min;
-//                Toast.makeText(getApplicationContext(), "Random: "+k, Toast.LENGTH_LONG).show();
                 randText.setText("" + globalRandom);
 
                 int color = Color.argb(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
@@ -69,17 +71,37 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.button2: {
                 if(!CheckPrime(globalRandom)) {
                     Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                    int ys = Integer.valueOf(yourScore.getText().toString());
+                    ys = ys+1;
+                    yourScore.setText("" + ys);
                 }else{
                     Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
                 }
+                globalRandom = random.nextInt(max - min) + min;
+                randText.setText("" + globalRandom);
+                int ts = Integer.valueOf(totalScore.getText().toString());
+                ts = ts+1;
+                totalScore.setText("" + ts);
+                int color = Color.argb(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
+                rL.setBackgroundColor(color);
                 break;
             }
             case R.id.button: {
                 if(CheckPrime(globalRandom)) {
                     Toast.makeText(getApplicationContext(), "Correct", Toast.LENGTH_LONG).show();
+                    int ys = Integer.valueOf(yourScore.getText().toString());
+                    ys = ys+1;
+                    yourScore.setText("" + ys);
                 }else{
                     Toast.makeText(getApplicationContext(), "Incorrect", Toast.LENGTH_LONG).show();
                 }
+                globalRandom = random.nextInt(max - min) + min;
+                randText.setText("" + globalRandom);
+                int ts = Integer.valueOf(totalScore.getText().toString());
+                ts = ts+1;
+                totalScore.setText("" + ts);
+                int color = Color.argb(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
+                rL.setBackgroundColor(color);
                 break;
             }
         }

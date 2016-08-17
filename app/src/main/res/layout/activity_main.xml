@@ -45,6 +45,49 @@
                 android:paddingRight="10dp"
                 android:textSize="70sp" />
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:padding="10dp"
+                android:layout_height="wrap_content"
+                android:background="#1b1b1b"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Score: "
+                    android:textSize="15sp"
+                    android:textColor="#fff"
+                    android:id="@+id/textView3" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:id="@+id/yourScore" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="/"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:id="@+id/textView4" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:id="@+id/outOfScore" />
+            </LinearLayout>
+
         </RelativeLayout>
 
 
@@ -83,7 +126,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Can you guess where the number is prime or not?"
+        android:text="Can you guess whether the number is prime or not?"
         android:id="@+id/textView2"
         android:layout_alignParentTop="true"
         android:layout_alignLeft="@+id/button"
