@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">PrimeOrNot</string>
     <string name="test">hello world</string>
+    <string name="prime">Prime</string>
+    <string name="np">Not Prime</string>
+    <string name="skip">SKIP</string>
 </resources>
