@@ -1,5 +1,6 @@
 package com.example.darvesh.primeornot;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
@@ -14,14 +15,14 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
-    Button prime, skip, notPrime;
+    Button prime, skip, notPrime, showHint, showCheat;
     TextView randText, yourScore, totalScore;
     //min, max variables for setting the lower and upper range for the random function
     int min = 1, max=1000;
     RelativeLayout rL;
     Random random = new Random();
     //Variable for Random number, which will be used throughout the code
-    int globalRandom, globalColor=-1, globalYourScore=0, globalTotal=0;
+    int globalRandom, globalColor=-1, globalYourScore=0, globalTotal=0, hintActivity=0, cheatActivity=0;
 
     static final String GLOBAL_RANDOM = "gRandom", RANDOM_COLOR = "rColor", GSCORE = "yourScore", TSCORE="totalScore";
 
@@ -31,6 +32,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setContentView(R.layout.activity_main);
         prime = (Button) findViewById(R.id.button);
         skip = (Button) findViewById(R.id.button3);
+        showHint = (Button) findViewById(R.id.hint);
+        showCheat = (Button) findViewById(R.id.cheat);
         notPrime = (Button) findViewById(R.id.button2);
         randText = (TextView) findViewById(R.id.textView);
         rL = (RelativeLayout) findViewById(R.id.relativeLayout);
@@ -38,6 +41,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         prime.setOnClickListener(this);
         skip.setOnClickListener(this);
         notPrime.setOnClickListener(this);
+        showHint.setOnClickListener(this);
+        showCheat.setOnClickListener(this);
 
         yourScore = (TextView) findViewById(R.id.yourScore);
         totalScore = (TextView) findViewById(R.id.outOfScore);
@@ -150,6 +155,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 globalColor = Color.argb(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
                 //assigning the layout a random color
                 rL.setBackgroundColor(globalColor);
+                break;
+            }
+            case R.id.hint: {
+                Intent hintActivityClass = new Intent(MainActivity.this, HintShowActivity.class);
+                startActivity(hintActivityClass);
+                hintActivity = 1;
+                break;
+            }
+            case R.id.cheat: {
+                Intent CheatActivityClass = new Intent(MainActivity.this, CheatShowActivity.class);
+                startActivity(CheatActivityClass);
+                cheatActivity = 1;
                 break;
             }
         }
