@@ -182,8 +182,33 @@
                 android:layout_alignRight="@+id/button3"
                 android:layout_alignEnd="@+id/button3" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/hint_seen"
+                android:layout_marginLeft="10dp"
+                android:paddingBottom="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@+id/hint"
+                android:layout_toEndOf="@+id/hint" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:id="@+id/cheat_seen"
+                android:layout_marginRight="10dp"
+                android:paddingBottom="15dp"
+                android:layout_alignParentBottom="true"
+                android:layout_toLeftOf="@+id/cheat"
+                android:layout_toStartOf="@+id/cheat" />
+
+
 
         </RelativeLayout>
+
+
 
     </ScrollView>
 

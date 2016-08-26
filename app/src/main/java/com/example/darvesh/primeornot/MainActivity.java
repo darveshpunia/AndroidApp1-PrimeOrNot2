@@ -16,15 +16,16 @@ import java.util.Random;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener{
 
     Button prime, skip, notPrime, showHint, showCheat;
-    TextView randText, yourScore, totalScore;
+    TextView randText, yourScore, totalScore, hint_seen, cheat_seen;
     //min, max variables for setting the lower and upper range for the random function
     int min = 1, max=1000;
     RelativeLayout rL;
     Random random = new Random();
     //Variable for Random number, which will be used throughout the code
     int globalRandom, globalColor=-1, globalYourScore=0, globalTotal=0, hintActivity=0, cheatActivity=0;
+    static boolean buttonState=true;
 
-    static final String GLOBAL_RANDOM = "gRandom", RANDOM_COLOR = "rColor", GSCORE = "yourScore", TSCORE="totalScore";
+    static final String BSTATE="btnstate", GLOBAL_RANDOM = "gRandom", RANDOM_COLOR = "rColor", GSCORE = "yourScore", TSCORE="totalScore", GETHINT="getHint", GETCHEAT="getCheat";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,6 +37,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         showCheat = (Button) findViewById(R.id.cheat);
         notPrime = (Button) findViewById(R.id.button2);
         randText = (TextView) findViewById(R.id.textView);
+        hint_seen = (TextView) findViewById(R.id.hint_seen);
+        cheat_seen = (TextView) findViewById(R.id.cheat_seen);
+
         rL = (RelativeLayout) findViewById(R.id.relativeLayout);
         //Handling button clicks by implementing OnClickListener
         prime.setOnClickListener(this);
@@ -55,6 +59,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             globalColor = savedInstanceState.getInt(RANDOM_COLOR);
             globalTotal = savedInstanceState.getInt(TSCORE);
             globalYourScore = savedInstanceState.getInt(GSCORE);
+            hintActivity = savedInstanceState.getInt(GETHINT);
+            cheatActivity = savedInstanceState.getInt(GETCHEAT);
             //setting data if it was modified before rotation
             if(globalColor!=-1){
                 //assigning the layout a random color
@@ -66,6 +72,20 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             if(globalTotal!=0){
                 totalScore.setText("" + globalTotal);
             }
+
+            if(hintActivity==1){
+                hint_seen.setText("Hint Seen");
+            }
+
+            if(cheatActivity==1){
+                cheat_seen.setText("Cheat Seen");
+            }
+
+            buttonState = savedInstanceState.getBoolean(BSTATE);
+
+            prime.setEnabled(buttonState);
+            notPrime.setEnabled(buttonState);
+
         }
         else {
             globalRandom = random.nextInt(max - min) + min;
@@ -84,6 +104,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         savedInstanceState.putInt(GSCORE, globalYourScore);
         //saving total questions attempted by user before orientation change
         savedInstanceState.putInt(TSCORE, globalTotal);
+
+        savedInstanceState.putInt(GETHINT, hintActivity);
+        savedInstanceState.putInt(GETCHEAT, cheatActivity);
+
+        savedInstanceState.putBoolean(BSTATE, buttonState);
+
         super.onSaveInstanceState(savedInstanceState);
     }
 
@@ -126,6 +152,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 globalColor = Color.argb(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
                 //assigning the layout a random color
                 rL.setBackgroundColor(globalColor);
+                hint_seen.setText("");
                 break;
             }
             case R.id.button2: {  // case to handle when the user taps on the button "Prime"
@@ -146,6 +173,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 totalScore.setText("" + globalTotal);
                 globalColor = Color.argb(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
                 rL.setBackgroundColor(globalColor);
+                hint_seen.setText("");
                 break;
             }
             case R.id.button3: {     // case to handle when the user taps on the button "Skip"
@@ -155,18 +183,35 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 globalColor = Color.argb(random.nextInt(256), random.nextInt(256), random.nextInt(256), random.nextInt(256));
                 //assigning the layout a random color
                 rL.setBackgroundColor(globalColor);
+                hint_seen.setText("");
+                cheat_seen.setText("");
+                buttonState = true;
+                prime.setEnabled(buttonState);
+                notPrime.setEnabled(buttonState);
+                hintActivity = 0;
+                cheatActivity = 0;
                 break;
             }
             case R.id.hint: {
                 Intent hintActivityClass = new Intent(MainActivity.this, HintShowActivity.class);
                 startActivity(hintActivityClass);
+                hint_seen.setText("Hint Seen");
                 hintActivity = 1;
                 break;
             }
             case R.id.cheat: {
                 Intent CheatActivityClass = new Intent(MainActivity.this, CheatShowActivity.class);
+                CheatActivityClass.putExtra("randomNum", globalRandom);
+                CheatActivityClass.putExtra("randomNumAns", CheckPrime(globalRandom)==true ? "Prime" : "not a Prime");
                 startActivity(CheatActivityClass);
                 cheatActivity = 1;
+                cheat_seen.setText("Cheat Seen");
+                buttonState = false;
+                prime.setEnabled(buttonState);
+                notPrime.setEnabled(buttonState);
+                globalTotal = Integer.valueOf(totalScore.getText().toString());
+                globalTotal = globalTotal+1;
+                totalScore.setText("" + globalTotal);
                 break;
             }
         }
